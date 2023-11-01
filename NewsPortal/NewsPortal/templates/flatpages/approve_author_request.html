@@ -1,0 +1,14 @@
+{% extends 'default.html' %}
+
+{% block content %}
+  <h2>Одобрение/Отклонение запроса на статус автора</h2>
+  <p>
+    Запрос от {{ author_request.user.username }} ({{ author_request.user.email }})
+  </p>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Одобрить</button>
+  </form>
+  <p><a href="{% url 'author_request_list' %}">Вернуться к списку запросов</a></p>
+{% endblock %}

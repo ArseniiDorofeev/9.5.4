@@ -1,0 +1,36 @@
+<!-- Наследуемся от шаблона default.html, который мы создали для flatpages -->
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+
+<!-- Устанавливаем заголовок страницы -->
+{% block title %}
+    news
+{% end-block title %}
+
+<!-- Весь контент страницы будет находиться в блоке content -->
+{% block content %}
+    <!-- Выводим текущую дату -->
+    <h3>{{ time_now|date:'d M Y' }}</h3>
+    <!-- Заголовок страницы -->
+    <h1>Новость</h1>
+    {% if news_id %}
+       <table>
+           <tr>
+               <td>Заголовок</td>
+               <td>Текст</td>
+               <td>Дата загрузки</td>
+           </tr>
+           <tr>
+               <!-- Вывод заголовка новости с применением фильтра censor -->
+               <td>{{ news_id.title|censor }}&emsp;</td>
+               <!-- Вывод текста новости с применением фильтра censor -->
+               <td>{{ news_id.content|censor }}&emsp;</td>
+               <!-- Вывод даты загрузки новости с применением фильтра censor -->
+               <td>{{ news_id.date_create|date:'d M Y '|censor }}</td>
+           </tr>
+       </table>
+    {% else %}
+       <!-- Если новости не существует, выводим сообщение о их отсутствии -->
+       <h2>Новостей нет!</h2>
+    {% endif %}
+{% end-block content %}

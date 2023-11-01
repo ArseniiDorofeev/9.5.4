@@ -1,0 +1,14 @@
+{% extends 'default.html' %}
+
+{% block content %}
+  <h2>Список запросов на статус автора</h2>
+  <ul>
+    {% for request in author_requests %}
+      <li>
+        Запрос от {{ request.user.username }} ({{ request.user.email }})
+        <a href="{% url 'approve_author_request' request.id %}">Одобрить</a>
+        <a href="{% url 'reject_author_request' request.id %}">Отклонить</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

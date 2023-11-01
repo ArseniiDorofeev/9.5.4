@@ -1,0 +1,41 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+
+{% block title %}
+Новости
+{% endblock title %}
+
+{% block content %}
+<h1>Все новости</h1>
+<table>
+    <tr>
+        <th>Заголовок</th>
+        <th>Дата публикации</th>
+        <th>Текст (первые 20 символов)</th>
+    </tr>
+    {% for post in news %}
+    <tr>
+        <td>{{ post.title|censor }}</td>
+        <td>{{ post.date_create|date:"d M Y" }}</td>
+        <td>{{ post.content|truncatechars:20|censor }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<div class="pagination">
+        <span class="step-links">
+            {% if news.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ news.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current-page">
+                Страница {{ news.number }} из {{ news.paginator.num_pages }}.
+            </span>
+
+            {% if news.has_next %}
+                <a href="?page={{ news.next_page_number }}">next</a>
+                <a href="?page={{ news.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
